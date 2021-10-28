@@ -1,4 +1,85 @@
-html
+$cardBG: #ffffff;
+$theme: #005f28;
+
+nav
 {
-    background-color: white;
+    background-color: $theme;
+    width: calc(100%-20px);
+    overflow-x: hidden;
+    display: flex;
+    padding: 0px 20px;
+    div
+    {
+        padding: 25px;
+        &:hover
+        {
+            background-color: darken($color: $theme, $amount: 2);
+        }
+        color: white;
+        margin-left: 5px;
+    }
+}
+
+body
+{
+    margin: 0;
+    background-color: rgb(245, 245, 245);
+    font-family: 'Open Sans', sans-serif;
+}
+
+main
+{
+    display: flex;
+    justify-content: center;
+    min-height: 80vh;
+    margin-top: 20px;
+    
+}
+#display
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 90vw;
+    align-content: flex-start;
+    align-items: stretch;
+}
+.card
+{
+    box-shadow: 2px 2px 10px #aaaaaa;
+    margin: 10px 0px;
+    width: 500px;
+    height: 300px;
+    flex-grow: 1;
+    margin: 10px;
+    background-color: $cardBG;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    .mask
+    {
+        width: 40vw;
+        height: 100%;
+        overflow: hidden;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 20px;
+        img
+        {
+            width: 5000px;
+            height: 100%;
+        }
+    }
+    div
+    {
+        width: 40vw;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        font-size: 3vw;
+        text-align: center;
+        text-shadow: 2px 2px 5px rgb(97, 97, 97);
+        
+    }
 }
