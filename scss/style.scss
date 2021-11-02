@@ -6,6 +6,7 @@ nav
     background-color: $theme;
     width: calc(100%-20px);
     overflow-x: hidden;
+    justify-content: flex-end;
     display: flex;
     padding: 0px 20px;
     div
@@ -39,17 +40,39 @@ main
 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: row;
     width: 90vw;
     align-content: flex-start;
     align-items: stretch;
+    .inputs
+    {
+        display: flex;
+        flex-direction: column;
+        :nth-child(n)
+        {
+            border-radius: 100vw;
+            width: 50vw;
+            padding: 35px;
+            margin-bottom: 50px;
+            font-size: large;
+        }
+        button
+        {
+            background-color: $theme;
+            color: white;
+            &:hover
+            {
+                background-color: darken($color: $theme, $amount: 3)
+            }
+        }
+    }
 }
 .card
 {
     box-shadow: 2px 2px 10px #aaaaaa;
     margin: 10px 0px;
-    width: 500px;
+    width: 600px;
     height: 300px;
     flex-grow: 1;
     margin: 10px;
@@ -58,9 +81,14 @@ main
     display: flex;
     overflow: hidden;
     align-items: center;
+    transition: all .4s;
+    &:hover
+    {
+        box-shadow: 2px 2px 20px #747474;
+        width: 650px;
+    }
     .mask
     {
-        width: 40vw;
         height: 100%;
         overflow: hidden;
         border-bottom-right-radius: 20px;
@@ -68,7 +96,7 @@ main
         img
         {
             width: 5000px;
-            height: 100%;
+            height: 500px;
         }
     }
     div
