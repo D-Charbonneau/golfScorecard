@@ -1,3 +1,8 @@
+let course;
+let teeNum;
+let playerCount;
+let playerScores = [];
+
 window.onload = new function ()
 {
     newCourse();
@@ -5,6 +10,7 @@ window.onload = new function ()
 
 function newCourse()
 {
+    playerCount = undefined;
     let promise = new Promise(
         function (resolve, reject)
         {
@@ -47,8 +53,7 @@ function newCourse()
     );
 }
 
-let course;
-let teeNum;
+
 
 function loadCard(id)
 {
@@ -79,7 +84,7 @@ function loadCard(id)
             course = obj;
             let display = document.getElementById("display");
             let content = `<div class="inputs"><select name="teeType" id="teeType"><option value="-1">Select Tee Type</option><option value="4">Auto change location</option><option value="3">Women</option><option value="2">Men</option><option value="1">Champion</option><option value="0">Pro</option>
-  
+  <input type="number" id="playerCount" placeholder="Amount of Players">
 </select><button onclick="chooseTee();">Go</button></div>`;
             display.innerHTML = content;
         },
@@ -93,7 +98,8 @@ function loadCard(id)
 function chooseTee()
 {
     teeNum = document.getElementById("teeType").value;
-    if (teeNum != -1)
+    playerCount = parseInt(document.getElementById("playerCount").value);
+    if (teeNum != -1 && playerCount > 0)
     {
         displayTable();
     }
@@ -106,15 +112,57 @@ function displayTable()
     {
         content += `<td>${i}</td>`;
     }
-    content += "</tr><tr><th>Yardage</th>";
+    content += "<th>Total</th></tr><tr><th>Yardage</th>";
+    let total = 0;
     for (let i = 0; i < course.holes.length; i++)
     {
+        total += course.holes[i].teeBoxes[teeNum].yards;
         content += `<td>${course.holes[i].teeBoxes[teeNum].yards}</td>`
     }
-    content += "</tr><tr><th>Par</th>";
+    content += `<td>${total}</td></tr><tr><th>Par</th>`;
+    total = 0;
     for (let i = 0; i < course.holes.length; i++)
     {
+        total += course.holes[i].teeBoxes[teeNum].par;
         content += `<td>${course.holes[i].teeBoxes[teeNum].par}</td>`
     }
+    content += `<td>${total}</td></tr>`;
+    for (let i = 0; i < playerCount; i++)
+    {
+        content += `<tr><th contenteditable="true">Player${i + 1}</th>`;
+        for (let j = 0; j < course.holes.length; j++)
+        {
+            content += `<td contenteditable="true"></td>`;
+        }
+        content += `<td></td></tr>`;
+    }
+
     display.innerHTML = content;
+}
+document.addEventListener('keyup', logKey);
+
+function logKey(e)
+{
+    if (playerCount != undefined)
+    {
+        renderTotals();
+    }
+}
+
+function renderTotals()
+{
+    for (let i = 3; i < document.getElementsByTagName("tr").length; i++)
+    {
+        document.getElementsByTagName("tr").item(i).lastChild.textContent = "";
+        let total = 0;
+        for (let j = 1; j < document.getElementsByTagName("tr").item(i).cells.length - 1; j++)
+        {
+            if (document.getElementsByTagName("tr").item(i).cells.item(j).textContent != "")
+            {
+                total += parseInt(document.getElementsByTagName("tr").item(i).cells.item(j).textContent);
+            }
+
+        }
+        document.getElementsByTagName("tr").item(i).lastChild.textContent = total;
+    }
 }
