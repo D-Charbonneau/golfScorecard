@@ -112,14 +112,14 @@ function displayTable()
     {
         content += `<td>${i}</td>`;
     }
-    content += "<th>Total</th></tr><tr><th>Yardage</th>";
+    content += "<th>Out</th><th>In</th><th>Total</th></tr><tr><th>Yardage</th>";
     let total = 0;
     for (let i = 0; i < course.holes.length; i++)
     {
         total += course.holes[i].teeBoxes[teeNum].yards;
         content += `<td>${course.holes[i].teeBoxes[teeNum].yards}</td>`
     }
-    content += `<td>${total}</td></tr><tr><th>Par</th>`;
+    content += `<td colspan="2" rowspan="2"></td><td>${total}</td></tr><tr><th>Par</th>`;
     total = 0;
     for (let i = 0; i < course.holes.length; i++)
     {
@@ -134,7 +134,7 @@ function displayTable()
         {
             content += `<td contenteditable="true"></td>`;
         }
-        content += `<td></td></tr>`;
+        content += `<td></td><td></td><td></td></tr>`;
     }
 
     display.innerHTML = content;
@@ -154,15 +154,26 @@ function renderTotals()
     for (let i = 3; i < document.getElementsByTagName("tr").length; i++)
     {
         document.getElementsByTagName("tr").item(i).lastChild.textContent = "";
-        let total = 0;
-        for (let j = 1; j < document.getElementsByTagName("tr").item(i).cells.length - 1; j++)
+        let outScore = 0;
+        for (let j = 1; j < 9; j++)
         {
             if (document.getElementsByTagName("tr").item(i).cells.item(j).textContent != "")
             {
-                total += parseInt(document.getElementsByTagName("tr").item(i).cells.item(j).textContent);
+                outScore += parseInt(document.getElementsByTagName("tr").item(i).cells.item(j).textContent);
             }
 
         }
-        document.getElementsByTagName("tr").item(i).lastChild.textContent = total;
+        let inScore = 0;
+        for (let j = 9; j < document.getElementsByTagName("tr").item(i).cells.length - 3; j++)
+        {
+            if (document.getElementsByTagName("tr").item(i).cells.item(j).textContent != "")
+            {
+                inScore += parseInt(document.getElementsByTagName("tr").item(i).cells.item(j).textContent);
+            }
+
+        }
+        document.getElementsByTagName("tr").item(i).cells.item(document.getElementsByTagName("tr").item(i).cells.length - 3).textContent = outScore;
+        document.getElementsByTagName("tr").item(i).cells.item(document.getElementsByTagName("tr").item(i).cells.length - 2).textContent = inScore;
+        document.getElementsByTagName("tr").item(i).lastChild.textContent = outScore + inScore;
     }
 }
