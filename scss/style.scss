@@ -79,6 +79,7 @@ main
 .card
 {
     box-shadow: 2px 2px 10px #aaaaaa;
+    justify-content: center;
     margin: 10px 0px;
     width: 600px;
     height: 300px;
@@ -118,15 +119,46 @@ main
         text-shadow: 2px 2px 5px rgb(97, 97, 97);
         
     }
+    table
+    {
+        border-collapse: collapse;
+    }
 }
-table
+.tableCard
 {
-    border-collapse: collapse;
-    border: 2px solid rgb(99, 99, 99);
+    box-shadow: 2px 2px 10px #aaaaaa;
+    justify-content: center;
+    margin: 10px 0px;
+    width: 600px;
+    min-height: 600px;
+    flex-grow: 1;
+    margin: 10px;
+    background-color: $cardBG;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    transition: all .4s;
+    &:hover
+    {
+        box-shadow: 2px 2px 20px #747474;
+        width: 650px;
+    }
+    table
+    {
+        width: 95%;
+        min-height: 95%;
+        border-collapse: collapse;
+    }
 }
 td, th
 {
     border: 1px solid black;
     padding: 8px;
     text-align: start;
+}
+
+.btop
+{
+    border-top: 3px solid black;
 }

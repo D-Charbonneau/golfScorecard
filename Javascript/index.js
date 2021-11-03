@@ -107,37 +107,91 @@ function chooseTee()
 
 function displayTable()
 {
-    let content = "<table><tr><th>Hole</th>";
+    let content = `<div class="tableCard"><table><tr><th>Hole</th>`;
     for (let i = 1; i <= course.holes.length; i++)
     {
         content += `<td>${i}</td>`;
     }
     content += "<th>Out</th><th>In</th><th>Total</th></tr><tr><th>Yardage</th>";
-    let total = 0;
+    let outTotal = 0;
+    let inTotal = 0;
     for (let i = 0; i < course.holes.length; i++)
     {
-        total += course.holes[i].teeBoxes[teeNum].yards;
+        if (i < 9)
+        {
+            inTotal += course.holes[i].teeBoxes[teeNum].yards;
+        }
+        else
+        {
+            outTotal += course.holes[i].teeBoxes[teeNum].yards;
+        }
         content += `<td>${course.holes[i].teeBoxes[teeNum].yards}</td>`
     }
-    content += `<td colspan="2" rowspan="2"></td><td>${total}</td></tr><tr><th>Par</th>`;
-    total = 0;
+    content += `<td>${outTotal}</td><td>${inTotal}</td><td>${inTotal + outTotal}</td></tr><tr><th>Par</th>`;
+    outTotal = 0;
+    inTotal = 0;
     for (let i = 0; i < course.holes.length; i++)
     {
-        total += course.holes[i].teeBoxes[teeNum].par;
+        if (i < 9)
+        {
+            inTotal += course.holes[i].teeBoxes[teeNum].par;
+        }
+        else
+        {
+            outTotal += course.holes[i].teeBoxes[teeNum].par;
+        }
         content += `<td>${course.holes[i].teeBoxes[teeNum].par}</td>`
     }
-    content += `<td>${total}</td></tr>`;
+    content += `<td>${outTotal}</td><td>${inTotal}</td><td>${inTotal + outTotal}</td></tr><tr><th>Handicap</th>`;
+    outTotal = 0;
+    inTotal = 0;
+    for (let i = 0; i < course.holes.length; i++)
+    {
+        if (i < 9)
+        {
+            inTotal += course.holes[i].teeBoxes[teeNum].hcp;
+        }
+        else
+        {
+            outTotal += course.holes[i].teeBoxes[teeNum].hcp;
+        }
+        content += `<td>${course.holes[i].teeBoxes[teeNum].hcp}</td>`
+    }
+    content += `<td>${outTotal}</td><td>${inTotal}</td><td>${inTotal + outTotal}</td></tr>`;
+    content += `</tr>`;
     for (let i = 0; i < playerCount; i++)
     {
-        content += `<tr><th contenteditable="true">Player${i + 1}</th>`;
+        if (i == 0)
+        {
+            content += `<tr><th class="btop" contenteditable="true">Player${i + 1}</th>`;
+        }
+        else
+        {
+            content += `<tr><th contenteditable="true">Player${i + 1}</th>`;
+        }
         for (let j = 0; j < course.holes.length; j++)
         {
-            content += `<td contenteditable="true"></td>`;
+            if (i == 0)
+            {
+                content += `<td class="btop" contenteditable="true"></td>`;
+            }
+            else
+            {
+                content += `<td contenteditable="true"></td>`;
+            }
+
         }
-        content += `<td></td><td></td><td></td></tr>`;
+        if (i == 0)
+        {
+            content += `<td class="btop"></td><td class="btop"></td><td class="btop"></td></tr>`;
+        }
+        else
+        {
+            content += `<td></td><td></td><td></td></tr>`;
+        }
     }
 
-    display.innerHTML = content;
+    display.innerHTML = content + "</div>";
 }
 document.addEventListener('keyup', logKey);
 
@@ -155,7 +209,7 @@ function renderTotals()
     {
         document.getElementsByTagName("tr").item(i).lastChild.textContent = "";
         let outScore = 0;
-        for (let j = 1; j < 9; j++)
+        for (let j = 1; j < 10; j++)
         {
             if (document.getElementsByTagName("tr").item(i).cells.item(j).textContent != "")
             {
@@ -164,7 +218,7 @@ function renderTotals()
 
         }
         let inScore = 0;
-        for (let j = 9; j < document.getElementsByTagName("tr").item(i).cells.length - 3; j++)
+        for (let j = 10; j < document.getElementsByTagName("tr").item(i).cells.length - 3; j++)
         {
             if (document.getElementsByTagName("tr").item(i).cells.item(j).textContent != "")
             {
