@@ -116,7 +116,7 @@ main {
   background-color: #ffffff;
   border-radius: 20px;
   display: flex;
-  overflow: hidden;
+  overflow-x: scroll;
   align-items: center;
   transition: all 0.4s;
 }
@@ -125,6 +125,7 @@ main {
   width: 650px;
 }
 .tableCard table {
+  margin: 30px 30px;
   width: 95%;
   min-height: 95%;
   border-collapse: collapse;
@@ -132,12 +133,25 @@ main {
 
 td, th {
   border: 1px solid black;
-  padding: 8px;
+  padding: 18px 8px;
   text-align: start;
 }
 
 .btop {
   border-top: 3px solid black;
+}
+
+@media only screen and (max-width: 1200px) {
+  td, th {
+    border: 1px solid black;
+    padding: 2px;
+    text-align: start;
+  }
+}
+@media only screen and (max-width: 800px) {
+  body {
+    font-size: smaller;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
